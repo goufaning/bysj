@@ -5,7 +5,7 @@ import com.sun.jna.Native;
 
 import java.io.UnsupportedEncodingException;
 
-public class NlpirTest {
+public class NlpirProcessor {
 
 	public interface CLibrary extends Library {
 		// 定义并初始化接口的静态变量
@@ -14,6 +14,10 @@ public class NlpirTest {
 		// printf函数声明
 		public int NLPIR_Init(byte[] sDataPath, int encoding,
 							  byte[] sLicenceCode);
+
+		public int NLPIR_AddUserWord(String sWord);
+
+		public int NLPIR_GetParagraphProcessAWordCount(String sParagraph);
 
 		public String NLPIR_ParagraphProcess(String sSrc, int bPOSTagged);
 

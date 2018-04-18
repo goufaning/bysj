@@ -1,5 +1,6 @@
 package com.goufaning.bysj.controller;
 
+import com.goufaning.bysj.common.FileProcessor;
 import com.goufaning.bysj.pojo.Message;
 import com.goufaning.bysj.pojo.Status;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ public class FileUploadController {
             }
             //将上传文件保存到一个目标文件当中
             String filePath = path + File.separator + filename;
+            FileProcessor.getInstance().setFilePath(filePath);
             try {
                 file.transferTo(new File(filePath));
             } catch (IOException e) {
