@@ -4,6 +4,10 @@ import java.util.Properties;
 
 public class LoadLib {
 
+    /**
+     * 获取分词dll文件路径，根据不同系统自动选择
+     * @return
+     */
     public static String getLibPath(){
         Properties properties=System.getProperties();
         StringBuffer sys=new StringBuffer("/libs/");
