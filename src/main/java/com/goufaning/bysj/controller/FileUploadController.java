@@ -3,6 +3,7 @@ package com.goufaning.bysj.controller;
 import com.goufaning.bysj.common.FileProcessor;
 import com.goufaning.bysj.pojo.Message;
 import com.goufaning.bysj.pojo.Status;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+@SpringBootApplication
 @Controller
 public class FileUploadController {
 

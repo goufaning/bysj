@@ -1,11 +1,7 @@
 package com.goufaning.bysj.utils;
 
 
-import com.goufaning.bysj.hdp.HDPGibbsSampler;
-import com.goufaning.bysj.utils.corpus.CLDACorpus;
-
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -17,26 +13,26 @@ public class GenerateCorpus {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		String trainFile = "data/nips_train.txt";
-		String testTrnFile = "data/nips_testTrn.txt";//测试部分的训练集
-		String testCalcFile = "data/nips_testCalc.txt";//测试部分计算集
-		HDPGibbsSampler hdp = new HDPGibbsSampler();
-		
-		String inFile =  "data/nips/nips.txt";
-		String I2WPath = "data/nips/vocab.nips.txt";
-		CLDACorpus corpus = new CLDACorpus(new FileInputStream(inFile),
-				9, 1);
-		hdp.V = DataUtil.getVocabSize(I2WPath);
-		corpus.getDocuments(true, 0.1f);
-		hdp.addInstances(corpus.getDocuments(), hdp.V);
-		int[][] train = corpus.getDocuments();
-		int[][] testTrnDocs = corpus.getTestTrnDocuments();
-		int[][] testCalcDocs = corpus.getTestCalcDocuments();
-		
-		outData(trainFile, train);
-		outData(testTrnFile, testTrnDocs);
-		outData(testCalcFile, testCalcDocs);
+//		// TODO Auto-generated method stub
+//		String trainFile = "data/nips_train.txt";
+//		String testTrnFile = "data/nips_testTrn.txt";//测试部分的训练集
+//		String testCalcFile = "data/nips_testCalc.txt";//测试部分计算集
+//		HDPGibbsSampler hdp = new HDPGibbsSampler();
+//
+//		String inFile =  "data/nips/nips.txt";
+//		String I2WPath = "data/nips/vocab.nips.txt";
+//		CLDACorpus corpus = new CLDACorpus(new FileInputStream(inFile),
+//				9, 1);
+//		hdp.V = DataUtil.getVocabSize(I2WPath);
+//		corpus.getDocuments(true, 0.1f);
+//		hdp.addInstances(corpus.getDocuments(), hdp.V);
+//		int[][] train = corpus.getDocuments();
+//		int[][] testTrnDocs = corpus.getTestTrnDocuments();
+//		int[][] testCalcDocs = corpus.getTestCalcDocuments();
+//
+//		outData(trainFile, train);
+//		outData(testTrnFile, testTrnDocs);
+//		outData(testCalcFile, testCalcDocs);
 		
 	}
 

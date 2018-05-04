@@ -28,8 +28,6 @@ public class NIpirUtil {
         nativeBytes = NlpirProcessor.CLibrary.Instance.NLPIR_ParagraphProcess(inputStr, 0);
         String[] result = nativeBytes.split(" ");
         List<String> words = Arrays.asList(result);
-        words = ExcludeStopWordUtil.stopWordFilter(words);
-        words.remove("");
         Map<String, Integer> word2Freq = new HashMap<String, Integer>();
         // 统计词频
         for (String word : words) {
