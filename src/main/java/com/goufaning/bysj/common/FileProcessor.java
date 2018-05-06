@@ -3,7 +3,9 @@ package com.goufaning.bysj.common;
 import com.google.common.base.Strings;
 import com.goufaning.bysj.mapmap.HashMapmap;
 import com.goufaning.bysj.mapmap.Mapmap;
+import com.goufaning.bysj.pojo.Literature;
 import com.goufaning.bysj.pojo.Word;
+import com.goufaning.bysj.utils.DataUtil;
 import com.goufaning.bysj.utils.ExcludeStopWordUtil;
 import com.goufaning.bysj.utils.NIpirUtil;
 import org.json.JSONArray;
@@ -24,13 +26,19 @@ public class FileProcessor {
     /** 临时用 */
     public static String filePath = "C:\\Users\\10319\\Desktop\\2395.txt";
 
+    public Map<String, List<Literature>> userId2Literature = new HashMap<>();
+
+    private static int docId = 1;
+
+    private static int wordIndex = 1;
+
     private static FileProcessor instance = new FileProcessor();
 
-    private Map<Integer, String> index2word = new HashMap<>();
+    private static Map<String, Integer> word2index = new HashMap<>();
 
-    private Mapmap<Integer, String, Integer> docid2word2freq = new HashMapmap<>();
+    private static Mapmap<Integer, String, Integer> docid2word2freq = new HashMapmap<>();
 
-    private Map<Integer, String> index2docName = new HashMap<>();
+    private static Map<Integer, String> docId2docName = new HashMap<>();
 
     private FileProcessor(){};
 
@@ -46,23 +54,59 @@ public class FileProcessor {
         return filePath;
     }
 
-    public static String textPreprocess(String str) throws UnsupportedEncodingException {
-        Map<String, Integer> result  = NIpirUtil.fenci(str.trim());
+    /**
+     * 添加用户文献
+     * @param literature
+     */
+    public void addLiterature(Literature literature) {
+        String userId = literature.getUserId();
+        List<Literature> literatureList = getLiteratureList(userId);
+        if (null == literatureList) {
+            literatureList = new LinkedList<>();
+        }
+        literatureList.add(literature);
+        userId2Literature.put(userId, literatureList);
+    }
+
+    /**
+     * 获取用户文章列表
+     * @param userID
+     * @return
+     */
+    public List<Literature> getLiteratureList(String userID) {
+        if (null != userId2Literature.get(userID)) {
+            return userId2Literature.get(userID);
+        }
+        return  null;
+    }
+
+    public static String textPreprocess(String docName, String str) throws UnsupportedEncodingException {
+        docId2docName.put(docId, docName);
+        String fenciResult = NIpirUtil.fenci(str.trim());
+        System.out.println(fenciResult);
+        Map<String, Integer> result  = DataUtil.statisticalFrequency(fenciResult);
         List<Word> word = new LinkedList<Word>();
         for (String key : result.keySet()) {
             if (Strings.isNullOrEmpty(key)|| ExcludeStopWordUtil.isStopWord(key)) {
                 continue;
             }
+            int index = wordIndex;
+            if (word2index.containsKey(key)) {
+                index = word2index.get(key);
+            } else {
+                word2index.put(key, index);
+                wordIndex++;
+            }
             int freq = result.get(key);
             word.add(new Word(key, freq));
+            docid2word2freq.put(docId, key, freq);
         }
+        docId++;
         JSONArray array = new JSONArray(word);
-
-
         return array.toString();
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(textPreprocess(text));
+        System.out.println(textPreprocess("", text));
     }
 }

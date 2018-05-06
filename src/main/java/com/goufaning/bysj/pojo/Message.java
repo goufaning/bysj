@@ -2,6 +2,9 @@ package com.goufaning.bysj.pojo;
 
 import java.util.ArrayList;
 
+/**
+ * Created by zhangjk on 2016/1/15.
+ */
 public class Message {
     private Status status;
     private String statusMsg = "";
@@ -40,3 +43,7 @@ public class Message {
         this.error = error;
     }
 }
+
+
+
+

@@ -15,9 +15,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,17 +28,17 @@ import java.util.Map;
 public class TestController {
 
     @RequestMapping(value="/text",method = RequestMethod.GET)
-    public String index(ModelMap model) throws IOException {
+    public String index(ModelMap model,  HttpSession session) throws IOException {
         List<Word> word = new LinkedList<Word>();
         File file = new File(FileProcessor.getInstance().getFilePath());
         String content = Files.asCharSource(file, Charsets.UTF_8).read();
-        System.out.println(content);
+        String userId = session.getId();
+        DataUtil.getResult(userId);
         Map<String, Integer> result = new HashMap<>();
-        try {
-            result = NIpirUtil.fenci(DataUtil.getText(content).trim());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+        String fenciResult = NIpirUtil.fenci(DataUtil.getText(content));
+        result = DataUtil.statisticalFrequency(fenciResult);
+
         for (String key : result.keySet()) {
             if (Strings.isNullOrEmpty(key)) {
                 continue;
