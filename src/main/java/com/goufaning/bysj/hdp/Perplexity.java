@@ -11,7 +11,6 @@ import com.goufaning.bysj.utils.maths.GammaDistrn;
 
 import java.util.List;
 
-
 public class Perplexity {
 
 	int K;//主题数

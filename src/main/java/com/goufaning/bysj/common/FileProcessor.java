@@ -80,6 +80,19 @@ public class FileProcessor {
         return  null;
     }
 
+    public Literature getLiterature(String userId, String literatureName) {
+        List<Literature> literatureList = getLiteratureList(userId);
+        if (null == literatureList || literatureList.size() == 0) {
+            return null;
+        }
+        for (Literature literature : literatureList) {
+            if (literatureName.equals(literature.getDocName())) {
+                return literature;
+            }
+        }
+        return null;
+    }
+
     public static String textPreprocess(String docName, String str) throws UnsupportedEncodingException {
         docId2docName.put(docId, docName);
         String fenciResult = NIpirUtil.fenci(str.trim());

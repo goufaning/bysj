@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>测试文件上传</title>
@@ -7,6 +7,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/jqcloud.css" rel="stylesheet" type="text/css" >
     <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <!-- 包括所有已编译的插件 -->
@@ -25,12 +26,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/bysj/" class="navbar-brand nav-title">主题抽取</a>
+            <a href="/" class="navbar-brand nav-title">主题抽取</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul id="main" class="nav navbar-nav">
                 <li class="cative"><a href="/">首页</a></li>
-                <li class="cative"><a href="#">体验</a></li>
+                <li class="cative"><a href="/main">体验</a></li>
                 <li class="cative"><a href="/text">文档与支持</a></li>
                 <div id="marker"></div>
             </ul>
@@ -40,41 +41,77 @@
         </div>
     </div>
 </nav>
-<div class="container" style="margin-top: 80px;">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        上传文件
-    </button>
-    <a></a>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">上传文件</h5>
-                    <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-loading">
-                        <input id="file_upload" name="file[]" multiple type="file" data-min-file-count="1">
+<div class="main">
+    <div class="container" style="padding-top: 80px;">
+        <div class="row"></div>
+        <!-- Button trigger modal -->
+        <div id="left" class="span2">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="width: 250px">文件列表
+                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModal" style="background-color:rgba(0,0,0,0.3);">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                </button></div>
+                <ul id="list" class="file_list list-group">
+                    <div th:each="file : ${filenames}">
+                        <li th:id="${file}" href="#" class="list-group-item" onclick="ajax(this)" th:text="${file}">file</li>
                     </div>
-                </div>
+                </ul>
             </div>
         </div>
-    </div>
+        <div id="right" class="span8">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">分词结果</h3>
+                </div>
+                <div id="fenci_result" class="panel-body">
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">词云</h3>
+                </div>
+                <div id="word_cloud" class="panel-body">
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">主题抽取</h3>
+                </div>
+                <div class="panel-body yellow_border">
+                    迭代次数：100   perplexity:818.7770811642779
+                    <button type="button" class="btn btn-warning pull-right" data-toggle="modal">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                </button>
+                </div>
+                <table class="table table-hover yellow_border">
+                    <tr><td>topic0</td><td> VR HTC Vive 游戏 开发者 虚拟现实 制作 内容 体验 用户 场景 交互 demo 12 Valve 眩晕 平台 设计 王雪红 游戏设计</td></tr>
+                    <tr><td>topic1</td><td>软件 ca 研发 设计 推荐系统 核心 实践 My 海量 商品 借助 应对 简单 流量 京东 案例 JavaScript 分享 架构 成员</td></tr>
+                </table>
+            </div>
+        </div>
 
-    <div class="file_list">
-        <div class='list-group'>
-            <a href='' class='list-group-item'>微笑话1</a>
-            <a href='#' class='list-group-item'>微笑话2</a>
-            <a href='#' class='list-group-item'>微笑话3</a>
-            <a href='#' class='list-group-item'>微笑话4</a>
-            <a href='#' class='list-group-item'>微笑话5</a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">上传文件</h5>
+                <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="file-loading">
+                    <input id="file_upload" name="file" multiple type="file">
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jqcloud-1.0.4.js"></script>
 </html>

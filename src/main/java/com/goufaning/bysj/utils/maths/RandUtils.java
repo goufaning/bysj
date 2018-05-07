@@ -2,7 +2,6 @@ package com.goufaning.bysj.utils.maths;
 
 import com.goufaning.bysj.utils.corpus.DOCState;
 
-
 public class RandUtils {
 	
 

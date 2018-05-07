@@ -20,7 +20,7 @@ public class DataUtil {
     public static String getTitle(String text) {
         String result = "";
         if (null != text) {
-            result = subString(text, "title", " abstract");
+            result = subString(text, "title:", " abstract");
         }
         return result;
     }
@@ -28,7 +28,15 @@ public class DataUtil {
     public static String getText(String text) {
         String result = "";
         if (null != text) {
-            result = subString(text, "text", null);
+            result = subString(text, "text:", null);
+        }
+        return result;
+    }
+
+    public static String getAbstract(String text) {
+        String result = "";
+        if (null != text) {
+            result = subString(text, "abstract：", "keyword");
         }
         return result;
     }
@@ -73,26 +81,36 @@ public class DataUtil {
         return word2Freq;
     }
 
-    public static void getResult(String userId) {
+    public static void getResult(String userId) throws IOException {
         List<Literature> literatureList = FileProcessor.getInstance().getLiteratureList(userId);
-        int docId = 0;
         int wordId = 0;
         Map<String, Integer> word2index = new HashMap<>();
+        List<String> words = new LinkedList<>();
+        bw = new BufferedWriter(new FileWriter("data/nips/nips.txt"));
         for (Literature literature : literatureList) {
-            System.out.print(docId);
-            docId++;
+            StringBuilder br = new StringBuilder();
             Map<String, Integer> word2Freq = literature.getWord2freq();
+            br.append(word2Freq.size());
+            System.out.print(word2Freq.size());
             for (String word : word2Freq.keySet()) {
                 if (null == word2index.get(word)) {
                     word2index.put(word, wordId);
-                    System.out.print(" " + word + " " + wordId + ":" + word2Freq.get(word));
+                    words.add(word);
+                    System.out.print(" " + wordId + ":" + word2Freq.get(word));
+                    br.append(" " + wordId + ":" + word2Freq.get(word));
                     wordId++;
                 } else {
                     int id = word2index.get(word);
-                    System.out.print(" "+ word + " " + id + ":" + word2Freq.get(word));
+                    System.out.print(" " + id + ":" + word2Freq.get(word));
+                    br.append(" " + id + ":" + word2Freq.get(word));
                 }
             }
             System.out.println();
+            writeResult(br.toString() + "\r\n");
+        }
+        bw = new BufferedWriter(new FileWriter("data/nips/vocab.nips.txt"));
+        for (String word : word2index.keySet()) {
+            writeResult(word + "\t" + word2index.get(word) + "\r\n");
         }
     }
 
@@ -125,9 +143,7 @@ public class DataUtil {
     }
 
     public static void printMap(Map<String, Integer> map) throws IOException {
-
         bw = new BufferedWriter(new FileWriter(""));
-
         Set<String> keys = map.keySet();
         writeResult("[" + keys.size() +"]" );
         for (String s : keys) {

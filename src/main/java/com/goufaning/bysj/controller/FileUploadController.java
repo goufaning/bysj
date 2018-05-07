@@ -52,7 +52,7 @@ public class FileUploadController {
                     file.transferTo(new File(filePath));
                     String fileEncode = DataUtil.codeString(filePath);
                     String content = Files.asCharSource(newfile, Charsets.UTF_8).read();
-                    content = DataUtil.getText(content);
+                    content = DataUtil.getAbstract(content);
                     String result = NIpirUtil.fenci(content);
                     Literature literature = new Literature(userID, filename, content, result);
                     FileProcessor.getInstance().addLiterature(literature);

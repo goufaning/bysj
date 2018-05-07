@@ -6,7 +6,6 @@ import com.goufaning.bysj.utils.maths.GammaDistrn;
 import java.util.List;
 
 
-
 /**
  * 计算perplexity
  * @author Administrator
@@ -57,14 +56,14 @@ public class Self_Perplexity {
 	 * @param sample_hyperparameter
 	 * @return
 	 */
-	public double getPerplexity(int K, int V, float eta, int[] word_counts_by_z, 
-			int[][] word_counts_by_zw, GammaDistrn alpha, 
-			GammaDistrn gamma, int totalTablesNum, int[] tablesNumByTopic,
-			DOCState[] docStates, boolean sample_hyperparameter, int[][] phi,
-			double beta, int totalWordsNum, int[] wordNumByTopic, int trainTotalWordsNum,
-			int[][] testDocs, DOCState[] docTestStates, List<int[][]> testDocsls,
-			int[] trn_tablesNumByTopic,int[] trn_wordNumByTopic, int[][] trn_phi,
-			int trn_totalTablesNum, int[][] testTrnDocs, int[][] testCalcDocs){
+	public double getPerplexity(int K, int V, float eta, int[] word_counts_by_z,
+								int[][] word_counts_by_zw, GammaDistrn alpha,
+								GammaDistrn gamma, int totalTablesNum, int[] tablesNumByTopic,
+								DOCState[] docStates, boolean sample_hyperparameter, int[][] phi,
+								double beta, int totalWordsNum, int[] wordNumByTopic, int trainTotalWordsNum,
+								int[][] testDocs, DOCState[] docTestStates, List<int[][]> testDocsls,
+								int[] trn_tablesNumByTopic, int[] trn_wordNumByTopic, int[][] trn_phi,
+								int trn_totalTablesNum, int[][] testTrnDocs, int[][] testCalcDocs){
 		this.K = K;
 		this.V = V;
 		this.eta = eta;

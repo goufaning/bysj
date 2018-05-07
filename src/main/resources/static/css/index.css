@@ -3,7 +3,9 @@
     margin: 0;
 }
 html, body {width:100%;height:100%;}
-
+.main {
+    background-color: #e5ebf2;
+}
 .bg {width: 100%;height: 100%;padding: 100px 0;text-align: center;color: #fff;
     background-size:contain;
     background: url(../img/background.jpg) no-repeat bottom center;
@@ -83,11 +85,38 @@ button.navbar-toggle > span.icon-bar {background-color:#dedede}
     width: 100px;
 }
 
+#left {
+    position:fixed;
+    z-index:99;
+}
+
 .file_list {
-    width: 240px;
-    height: 400px;
-    position: absolute;
-    float: left;
-    margin: 0;
-    background-color: #2b542c;
+    width: 250px;
+    height: 70%;
+    position:fixed;
+    z-index:99;
+    overflow : auto;
+    border:1px solid #96c2f1;background:#eff7ff;
+}
+
+#right {
+    margin-left: 250px;
+    height: 1000px;
+    padding: 10px;
+}
+
+#fenci_result {
+    padding: 20px;
+    height: 100px;
+    border:1px solid #adcd3c;background:#f2fddb;
+    overflow : auto;
+}
+#word_cloud {
+    padding: 20px;
+    height: 150px;
+    border:1px solid #bbe1f1;background:#eefaff;
+}
+
+.yellow_border {
+    border:1px solid #e3e197;background:#ffffdd;
 }

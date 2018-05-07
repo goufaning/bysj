@@ -13,6 +13,25 @@ $input.fileinput({
     $input.fileinput("upload");
 });;
 $input.on('filebatchuploadsuccess', function(event, data, previewId, index) {
-    var filenames = data.filenames;
     $("#close").click();
+    var filenames = data.filenames;
+    for (var i = 0; i < filenames.length; i++) {
+        $("#list").append('<li id="' + filenames[i] +'" href="#" class="list-group-item" onclick="ajax(this)">' + filenames[i]+ '</li>');
+    }
 });
+
+function ajax(btn){
+    var  filename = btn.id;
+    $.ajax({
+        type: "GET",
+        url: "file",
+        data: {"fileName" : filename},
+        dataType: "json",
+        success: function(data){
+            $('#fenci_result').empty();   //清空
+            $('#word_cloud').empty();   //清空
+            $('#fenci_result').append(data.content);
+            var word = JSON.parse(data.words);
+            $("#word_cloud").jQCloud(word, {shape: "elliptic",delayedMode:true});
+        }
+    })};

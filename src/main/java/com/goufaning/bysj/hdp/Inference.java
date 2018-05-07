@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-
 public class Inference {
 
 	//----------------------
@@ -81,7 +80,7 @@ public class Inference {
 
 	/**
 	 * 初始化，将词随机赋予桌子与主题
-	 * @param corpus  格式与Blei 的 cLDA一致
+	 * @param documentsInput  格式与Blei 的 cLDA一致
 	 */
 	public void addInstances(int[][] documentsInput, int V) {
 		this.V = V;

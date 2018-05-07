@@ -3,7 +3,6 @@ package com.goufaning.bysj.hdp;
 import com.goufaning.bysj.utils.corpus.DOCState;
 import com.goufaning.bysj.utils.maths.*;
 
-
 /**
  * 集中参数，重采样
  * @author Zhuo
