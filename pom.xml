@@ -36,44 +36,6 @@
 		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
 	    </dependency>
 
-
-	    <!-- pdf -->
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>pdfbox</artifactId>
-		    <version>2.0.0</version>
-	    </dependency>
-
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>fontbox</artifactId>
-		    <version>2.0.0</version>
-	    </dependency>
-
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>jempbox</artifactId>
-		    <version>1.8.11</version>
-	    </dependency>
-
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>xmpbox</artifactId>
-		    <version>2.0.0</version>
-	    </dependency>
-
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>preflight</artifactId>
-		    <version>2.0.0</version>
-	    </dependency>
-
-	    <dependency>
-		    <groupId>org.apache.pdfbox</groupId>
-		    <artifactId>pdfbox-tools</artifactId>
-		    <version>2.0.0</version>
-	    </dependency>
-
 	    <dependency>
 		    <groupId>com.google.guava</groupId>
 		    <artifactId>guava</artifactId>
@@ -85,9 +47,6 @@
 		    <artifactId>tomcat-embed-jasper</artifactId>
 		    <scope>provided</scope>
 	    </dependency>
-
-
-
 
 		<!--其他需要的包-->
 		<dependency>

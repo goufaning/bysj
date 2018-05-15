@@ -15,8 +15,6 @@ public class FileUploadConfiguration {
         factory.setMaxFileSize("5MB"); // KB,MB
         /// 设置总上传数据总大小
         factory.setMaxRequestSize("20MB");
-        // Sets the directory location where files will be stored.
-        // factory.setLocation("路径地址");
         return factory.createMultipartConfig();
     }
 }

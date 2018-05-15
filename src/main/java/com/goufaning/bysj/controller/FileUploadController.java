@@ -2,6 +2,7 @@ package com.goufaning.bysj.controller;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.goufaning.bysj.common.Constant;
 import com.goufaning.bysj.common.FileProcessor;
 import com.goufaning.bysj.pojo.Literature;
 import com.goufaning.bysj.pojo.Message;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class FileUploadController {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
+    // 上传文件
     @RequestMapping(value="/upload_file",method= RequestMethod.POST,produces = "text/html;charset=utf-8")
     @ResponseBody
     public String upload(@RequestParam("file") MultipartFile[] files, HttpSession session) {
@@ -36,21 +38,17 @@ public class FileUploadController {
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             if (!file.isEmpty()) {
-                //上传文件路径
-                String path = "C://file";
                 //上传文件名
                 String filename = file.getOriginalFilename();
-                File newfile = new File(path, filename);
+                String filePath = Constant.saveFilePath + File.separator + filename;
+                File newfile = new File(filePath);
                 //判断路径是否存在，如果不存在就创建一个
                 if (!newfile.getParentFile().exists()) {
                     newfile.getParentFile().mkdirs();
                 }
                 //将上传文件保存到一个目标文件当中
-                String filePath = path + File.separator + filename;
-                FileProcessor.getInstance().setFilePath(filePath);
                 try {
-                    file.transferTo(new File(filePath));
-                    String fileEncode = DataUtil.codeString(filePath);
+                    file.transferTo(newfile);
                     String content = Files.asCharSource(newfile, Charsets.UTF_8).read();
                     content = DataUtil.getAbstract(content);
                     String result = NIpirUtil.fenci(content);
@@ -73,6 +71,22 @@ public class FileUploadController {
             msg.setStatusMsg("文件上传成功");
         }
         logger.info(msg.getStatus().toString());
+        return "{}";
+    }
+
+    @RequestMapping(value="/delete_all",method= RequestMethod.GET,produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String deleteAllFile(HttpSession session) {
+        String userID = session.getId();
+        FileProcessor.getInstance().removeAllLiterature(userID);
+        return "{}";
+    }
+
+    @RequestMapping(value="/del",method= RequestMethod.GET,produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String deleteFile(@RequestParam("filename") String filename, HttpSession session) {
+        String userID = session.getId();
+        FileProcessor.getInstance().removeLiterature(userID, filename);
         return "{}";
     }
 }

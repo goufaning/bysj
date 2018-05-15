@@ -30,12 +30,14 @@ public class FileController {
         }
         List<Word> word = new LinkedList<Word>();
         Map<String, Integer> result = literature.getWord2freq();
-        for (String key : result.keySet()) {
-            if (Strings.isNullOrEmpty(key)) {
-                continue;
+        if (null != result && 0 != result.size()) {
+            for (String key : result.keySet()) {
+                if (Strings.isNullOrEmpty(key)) {
+                    continue;
+                }
+                int freq = result.get(key);
+                word.add(new Word(key, freq));
             }
-            int freq = result.get(key);
-            word.add(new Word(key, freq));
         }
         JSONArray array = new JSONArray(word);
         map.put("words", array.toString());

@@ -15,6 +15,7 @@
 
 package com.goufaning.bysj.hdp;
 
+import com.goufaning.bysj.pojo.Result;
 import com.goufaning.bysj.utils.OutTopics;
 import com.goufaning.bysj.utils.Readdata;
 import com.goufaning.bysj.utils.corpus.CLDACorpus;
@@ -60,7 +61,7 @@ public class HDPGibbsSampler {
 	
 	public int V;//单词数
 	public int totalWordsNum;//总的词数，与单词数的区别在于n个相同的单词，单词数只计1，而总的词数计n
-	public int K = 10;//主题数，初始主题只为1
+	public int K = 1;//主题数，初始主题只为1
 	public int totalTablesNum;//总的桌子数
 	
 	//---------测试--------------//
@@ -303,8 +304,9 @@ public class HDPGibbsSampler {
 	 * @param maxIter number of iterations to run
 	 * @throws IOException 
 	 */
-	public void run(int shuffleLag, int maxIter, PrintStream log) 
+	public double run(int shuffleLag, int maxIter, PrintStream log)
 			throws IOException {
+		double result = 0;
 		Perplexity perp = new Perplexity();
 		Self_Perplexity sperp = new Self_Perplexity();
 		SampleConcenPara sc = new SampleConcenPara();
@@ -324,7 +326,8 @@ public class HDPGibbsSampler {
 			
 			
 			//3.判断是否收敛
-			if(iter % 5 == 0 && iter > 0){
+//			if(iter % 5 == 0 && iter > 0){
+			if(iter > 0){
 			double perplexity = sperp.getPerplexity(K, V, (float)eta, wordNumByTopic, 
 					phi, alpha, gamma, totalTablesNum, tablesNumByTopic,
 					docStates, false, phi, eta, totalWordsNum, wordNumByTopic, 
@@ -334,11 +337,13 @@ public class HDPGibbsSampler {
 			System.out.println((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()) + 
 					"\titer = \t" + iter + "\t#topics = \t" + K + "\t, #tables = "
 					+ totalTablesNum + ",\tperplexity:\t" + perplexity);
-				if(perplexity < 400){
-					break;
-				}
+			result = perplexity;
+//				if(perplexity < 400){
+//					break;
+//				}
 			}
 		}
+		return result;
 	}
 		
 	
@@ -477,7 +482,6 @@ public class HDPGibbsSampler {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		
 		HDPGibbsSampler hdp = new HDPGibbsSampler();
 		String trainFile =  "data/nips/nips.txt";
 		String I2WPath = "data/nips/vocab.nips.txt";
@@ -499,10 +503,38 @@ public class HDPGibbsSampler {
 		System.out.println("totalWordsNum = "+hdp.totalWordsNum);
 		System.out.println("NumberOfDocs = "+hdp.docStates.length);
 		long start = System.currentTimeMillis();
-		hdp.run(0, 5000, System.out);
+		hdp.run(0, 50, System.out);
 		System.out.println("Inference time: " + (System.currentTimeMillis()-start)/1000f + "seconds");
 		OutTopics ot = new OutTopics(hdp.phi, hdp.K, hdp.V, I2WPath);
 		ot.outTopics();
-
 	}
+
+	public static Result hdp(int lter) throws IOException {
+		HDPGibbsSampler hdp = new HDPGibbsSampler();
+		String trainFile = "data/nips/nips.txt";
+		String I2WPath = "data/nips/vocab.nips.txt";
+
+		System.out.println("gamma = "+ hdp.gamma.getValue());
+		System.out.println("alpha = "+ hdp.alpha.getValue());
+
+		CLDACorpus corpus = new CLDACorpus(new FileInputStream(trainFile),
+				hdp.trainCount, hdp.testCount);
+		hdp.V = Readdata.getVocabSize(I2WPath);
+		corpus.getDocuments(true, 0.1f);
+		hdp.addInstances(corpus.getDocuments(), hdp.V);
+
+		hdp.testTrnDocs = corpus.getTestTrnDocuments();
+		hdp.testCalcDocs = corpus.getTestCalcDocuments();
+		System.out.println("V = "+hdp.V);
+		System.out.println("totalWordsNum = "+hdp.totalWordsNum);
+		System.out.println("NumberOfDocs = "+hdp.docStates.length);
+		double perplexity = hdp.run(0, lter, System.out);
+		OutTopics ot = new OutTopics(hdp.phi, hdp.K, hdp.V, I2WPath);
+		Map<Integer, List<String>> topics = ot.getTopics();
+		Result result = new Result();
+		result.setPerplexity(perplexity);
+		result.setTopics(topics);
+		return result;
+	}
+
 }

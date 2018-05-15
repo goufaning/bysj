@@ -1,15 +1,52 @@
 package com.goufaning.bysj.utils;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import com.google.common.io.Files;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class FileUtil {
+
+    public static void deleteFile(String pathname) {
+        try{
+            File file = new File(pathname);
+            if(file.delete()){
+                System.out.println(file.getName() + " 文件已被删除！");
+            }else{
+                System.out.println("文件删除失败！");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveFile(String fileName, String contents) {
+        checkNotNull(fileName, "Provided file name for writing must NOT be null.");
+        checkNotNull(contents, "Unable to write null contents.");
+        final File newFile = new File(fileName);
+        try
+        {
+            Files.write(contents.getBytes(), newFile);
+        }
+        catch (IOException fileIoEx)
+        {
+            System.err.println(  "ERROR trying to write to file '" + fileName + "' - "
+                    + fileIoEx.toString());
+        }
+    }
+
+    /**
+     * 获取文件夹下所有txt文件名
+     * @param file
+     * @return
+     */
     public static List<String> getFileList(File file) {
-
         List<String> result = new ArrayList<String>();
-
         if (!file.isDirectory()) {
             System.out.println(file.getAbsolutePath());
             result.add(file.getAbsolutePath());
@@ -27,30 +64,7 @@ public class FileUtil {
                 result.add(directoryList[i].getPath());
             }
         }
-
         return result;
-    }
-
-    public static void main(String[] args) throws IOException {
-        String FILE_IN = "C:\\Users\\10319\\Desktop\\format";
-        File f = new File(FILE_IN);
-        List<String> list = new ArrayList<String>();
-        list = getFileList(f);
-
-        System.out.println(list.size());
-
-        for (String l : list) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(l)), Charset.forName("GBK")));
-            StringBuilder sb = new StringBuilder();
-            String str;
-            while((str = br.readLine()) != null){
-                sb.append(str);
-            }
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(l)), Charset.forName("UTF-8")));
-            bw.write(sb.toString());
-            bw.flush();
-            bw.close();
-        }
     }
 
 }

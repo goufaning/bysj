@@ -1,6 +1,7 @@
 package com.goufaning.bysj.utils;
 
-import com.goufaning.bysj.common.Contstant;
+import com.goufaning.bysj.common.Constant;
+import org.springframework.util.ResourceUtils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,8 +11,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class ExcludeStopWordUtil {
-    private static HashSet<String> stopWordSet = loadStopDict(Contstant.STOP_DICT_PATH);
+
+    private static HashSet<String> stopWordSet = loadStopDict(Constant.stopDirPath);
 
     /**
      * 停用词集合
@@ -22,7 +25,7 @@ public class ExcludeStopWordUtil {
     public static HashSet<String> loadStopDict(String filePath) {
         stopWordSet = new HashSet<String>();
         try {
-            FileInputStream fis = new FileInputStream(filePath);
+            FileInputStream fis = new FileInputStream(ResourceUtils.getFile(filePath));
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
 

@@ -7,17 +7,11 @@
  */
 
 package com.goufaning.bysj.utils.maths;
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.*;
 import cern.jet.random.Gamma;
-//import oldcode.HDPTopicModel.DirichletProcess;
-//import cern.jet.random.Beta;
-//import cern.jet.random.Gamma;
-//import cern.jet.random.Uniform;
+
+import java.io.IOException;
+import java.util.Random;
+
 
 /**
  *
