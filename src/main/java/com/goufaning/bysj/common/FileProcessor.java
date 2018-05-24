@@ -10,7 +10,6 @@ import com.goufaning.bysj.utils.ExcludeStopWordUtil;
 import com.goufaning.bysj.utils.FileUtil;
 import com.goufaning.bysj.utils.NIpirUtil;
 import org.json.JSONArray;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -20,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 public class FileProcessor {
-
-    @Value("${file.path}")
-    public static String filePath;
 
     public Map<String, List<Literature>> userId2Literature = new HashMap<>();
 
@@ -44,14 +40,6 @@ public class FileProcessor {
         return instance;
     }
 
-    public void setFilePath(String path) {
-        filePath = path;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
     /**
      * 添加用户文献
      * @param literature
@@ -66,17 +54,26 @@ public class FileProcessor {
         userId2Literature.put(userId, literatureList);
     }
 
+    /**
+     * 删除用户文档
+     * @param userId
+     */
     public void removeAllLiterature(String userId) {
         if (null != getLiteratureList(userId)) {
             for (Literature l : getLiteratureList(userId)) {
                 String name = l.getDocName();
-                String path = filePath + File.separator + name;
+                String path = Constant.saveFilePath + File.separator  +userId + File.separator+ name;
                 FileUtil.deleteFile(path);
             }
             userId2Literature.remove(userId);
         }
     }
 
+    /**
+     * 删除某篇文档
+     * @param userId
+     * @param docName
+     */
     public void removeLiterature(String userId, String docName) {
         List<Literature> literatureList = getLiteratureList(userId);
         if (null == literatureList || literatureList.size() == 0) {
@@ -103,6 +100,12 @@ public class FileProcessor {
         return  null;
     }
 
+    /**
+     * 获取用户某个文档
+     * @param userId
+     * @param literatureName
+     * @return
+     */
     public Literature getLiterature(String userId, String literatureName) {
         List<Literature> literatureList = getLiteratureList(userId);
         if (null == literatureList || literatureList.size() == 0) {

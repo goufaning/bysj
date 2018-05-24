@@ -8,15 +8,13 @@ import java.util.*;
 
 
 public class DataUtil {
-    private static String path = (new File("")).getAbsolutePath();
-    private static BufferedReader br = null;
     private static BufferedWriter bw = null;
-    private static String line_current = null;
-    private static String[] words = null;
-    private static List<String> word_list = new ArrayList<String>();
-    static Map<String, Integer> wordToint = new HashMap<String, Integer>();
-    public static int wordCount = 0;
-    private static final String regex = ",";
+
+    /**
+     * 获取文章标题
+     * @param text
+     * @return
+     */
     public static String getTitle(String text) {
         String result = "";
         if (null != text) {
@@ -25,6 +23,11 @@ public class DataUtil {
         return result;
     }
 
+    /**
+     * 获取文章内容
+     * @param text
+     * @return
+     */
     public static String getText(String text) {
         String result = "";
         if (null != text) {
@@ -33,6 +36,11 @@ public class DataUtil {
         return result;
     }
 
+    /**
+     * 获取文章摘要
+     * @param text
+     * @return
+     */
     public static String getAbstract(String text) {
         String result = "";
         if (null != text) {
@@ -41,6 +49,14 @@ public class DataUtil {
         return result;
     }
 
+
+    /**
+     * 截取strStart和strEnd之间的字符串，若strEnd为空，就是截取到末尾
+     * @param str
+     * @param strStart
+     * @param strEnd
+     * @return
+     */
     public static String subString(String str, String strStart, String strEnd) {
         /* 找出指定的2个字符在 该字符串里面的 位置 */
         int strStartIndex = str.indexOf(strStart);
@@ -91,21 +107,17 @@ public class DataUtil {
             StringBuilder br = new StringBuilder();
             Map<String, Integer> word2Freq = literature.getWord2freq();
             br.append(word2Freq.size());
-            System.out.print(word2Freq.size());
             for (String word : word2Freq.keySet()) {
                 if (null == word2index.get(word)) {
                     word2index.put(word, wordId);
                     words.add(word);
-                    System.out.print(" " + wordId + ":" + word2Freq.get(word));
                     br.append(" " + wordId + ":" + word2Freq.get(word));
                     wordId++;
                 } else {
                     int id = word2index.get(word);
-                    System.out.print(" " + id + ":" + word2Freq.get(word));
                     br.append(" " + id + ":" + word2Freq.get(word));
                 }
             }
-            System.out.println();
             writeResult(br.toString() + "\r\n");
         }
         bw = new BufferedWriter(new FileWriter("data/nips/vocab.nips.txt"));
@@ -155,7 +167,7 @@ public class DataUtil {
         }
     }
 
-    public static void writeResult(String line) throws IOException {
+    public static void writeResult(String line) {
         try {
             if (bw != null) {
                 bw.write(line);

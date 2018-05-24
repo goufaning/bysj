@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>分词</title>
+    <!-- 引入 Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- 包括所有已编译的插件 -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body class="agileits_w3layouts">
+<nav id="title" class="navbar my-navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand nav-title">主题抽取</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <ul id="main" class="nav navbar-nav">
+                <li class="cative"><a href="/">首页</a></li>
+                <li class="cative"><a href="/main">主题抽取</a></li>
+                <li class="cative active"><a href="/feedback">反馈</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="w3layouts_main wrap">
+        <h3>请花几分钟帮助我们为您提供更好的服务。 </h3>
+        <form action="/sendmail" method="post" class="agile_form">
+            <h2>您对我们的产品感到满意吗？</h2>
+            <ul class="agile_info_select">
+                <li><input type="radio" name="view" id="excellent" value="优秀">
+                    <label for="excellent">优秀</label>
+                    <div class="check w3"></div>
+                </li>
+                <li><input type="radio" name="view" id="good" checked="checked" value="好">
+                    <label for="good">好</label>
+                    <div class="check w3ls"></div>
+                </li>
+                <li><input type="radio" name="view" id="neutral" value="一般">
+                    <label for="neutral">一般</label>
+                    <div class="check wthree"></div>
+                </li>
+                <li><input type="radio" name="view" id="poor" value="不好">
+                    <label for="poor">不好</label>
+                    <div class="check w3_agileits"></div>
+                </li>
+            </ul>
+            <h2>如果您有具体的反馈意见，请写信给我们...</h2>
+            <textarea name="content" placeholder="您的意见..." class="w3l_summary"  required=""></textarea>
+            <input id="name" type="text" placeholder="您的姓名" name="name" required="" />
+            <input id="mail" type="email" placeholder="您的邮箱" name="email" required=""/>
+            <input id="send_mail" type="submit" value="发送" class="agileinfo" />
+        </form>
+    </div>
+</div>
+</body>
+</html>

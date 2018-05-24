@@ -40,7 +40,7 @@ public class FileUploadController {
             if (!file.isEmpty()) {
                 //上传文件名
                 String filename = file.getOriginalFilename();
-                String filePath = Constant.saveFilePath + File.separator + filename;
+                String filePath = Constant.saveFilePath + File.separator + userID + File.separator + filename;
                 File newfile = new File(filePath);
                 //判断路径是否存在，如果不存在就创建一个
                 if (!newfile.getParentFile().exists()) {

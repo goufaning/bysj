@@ -22,13 +22,12 @@ public class ExcludeStopWordUtil {
      * @param filePath 停用词存放的文件路径
      * @return 停用词集合
      */
-    public static HashSet<String> loadStopDict(String filePath) {
+    private static HashSet<String> loadStopDict(String filePath) {
         stopWordSet = new HashSet<String>();
         try {
             FileInputStream fis = new FileInputStream(ResourceUtils.getFile(filePath));
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
-
             String line;
             while ((line = br.readLine()) != null)
                 stopWordSet.add(line);

@@ -1,44 +1,30 @@
 package com.goufaning.bysj.utils;
 
-import com.google.common.io.Files;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class FileUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     public static void deleteFile(String pathname) {
         try{
             File file = new File(pathname);
             if(file.delete()){
-                System.out.println(file.getName() + " 文件已被删除！");
+                logger.info(file.getName() + " 文件已被删除！");
             }else{
-                System.out.println("文件删除失败！");
+                logger.info("文件删除失败！");
             }
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    public static void saveFile(String fileName, String contents) {
-        checkNotNull(fileName, "Provided file name for writing must NOT be null.");
-        checkNotNull(contents, "Unable to write null contents.");
-        final File newFile = new File(fileName);
-        try
-        {
-            Files.write(contents.getBytes(), newFile);
-        }
-        catch (IOException fileIoEx)
-        {
-            System.err.println(  "ERROR trying to write to file '" + fileName + "' - "
-                    + fileIoEx.toString());
-        }
-    }
 
     /**
      * 获取文件夹下所有txt文件名
