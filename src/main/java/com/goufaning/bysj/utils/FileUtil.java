@@ -39,7 +39,7 @@ public class FileUtil {
         } else {
             File[] directoryList = file.listFiles(new FileFilter() {
                 public boolean accept(File file) {
-                    if (file.isFile() && file.getName().indexOf("txt") > -1) {
+                    if (file.isFile() && file.getName().contains("txt")) {
                         return true;
                     } else {
                         return false;
