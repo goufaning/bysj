@@ -30,6 +30,7 @@ button.navbar-toggle > span.icon-bar {background-color:#dedede}
 
 #big_title {
     border:1px solid #a9c9e2;background-color:rgba(0,0,0,0.3);
+    margin-top: 7%;
 }
 
 .main-btn {
@@ -60,7 +61,7 @@ button.navbar-toggle > span.icon-bar {background-color:#dedede}
 
 .file_list {
     width: 250px;
-    height: 70%;
+    height: 440px;
     position:fixed;
     z-index:99;
     overflow : auto;

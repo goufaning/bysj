@@ -19,8 +19,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 @RestController
@@ -34,7 +32,6 @@ public class FileUploadController {
         String userID = session.getId();
         Message msg = new Message();
         ArrayList<Integer> arr = new ArrayList<>();
-        Map<String, String> map = new HashMap<>();
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             if (!file.isEmpty()) {
